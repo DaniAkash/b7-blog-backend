@@ -1,3 +1,4 @@
+require("./config/db");
 const express = require("express");
 const bodyParser = require("body-parser");
 const postRouter = require("./routers/postRouter");
