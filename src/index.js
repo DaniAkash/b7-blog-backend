@@ -1,9 +1,15 @@
-var http = require("http");
+const express = require("express");
+const bodyParser = require("body-parser");
 
-//create a server object:
-http
-  .createServer(function(req, res) {
-    res.write("Hello World!"); //write a response to the client
-    res.end(); //end the response
-  })
-  .listen(8080); //the server object listens on port 8080
+const app = express();
+
+app.set("trust proxy", 1); // trust first proxy
+app.use(bodyParser.json());
+
+app.get("/", (req, res) => {
+  res.send("Blog Backend running!");
+});
+
+const server = app.listen(8080, () => {
+  console.log("Server running on port: " + server.address().port);
+});
