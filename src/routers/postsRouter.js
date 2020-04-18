@@ -23,6 +23,17 @@ postsRouter
       console.error(e);
       response.status(500).send("Internal Server Error");
     }
+  })
+  .post("/", async (request, response) => {
+    try {
+      const post = new Post(request.body);
+      const saveResponse = await post.save();
+      console.log(saveResponse);
+      response.status(200).json({ status: "SUCCESS" });
+    } catch (e) {
+      console.error(e);
+      response.status(500).send("Internal Server Error");
+    }
   });
 
 module.exports = postsRouter;
