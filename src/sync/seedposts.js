@@ -95,6 +95,7 @@ const clearDB = () => {
     .catch(console.error);
 };
 
+clearDB();
 seedPosts();
 
 module.exports = seedPosts;

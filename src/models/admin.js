@@ -8,7 +8,8 @@ const AdminSchema = new Schema({
     required: true
   },
   passwordHash: {
-    type: String
+    type: String,
+    required: true
   }
 });
 
