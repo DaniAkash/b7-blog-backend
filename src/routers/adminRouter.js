@@ -5,6 +5,7 @@ const {
   adminTokenGenerator,
   adminTokenValidator
 } = require("../utils/adminTokenManager");
+const adminAuth = require("../middleware/adminAuth");
 
 const adminRouter = express.Router();
 
@@ -19,7 +20,7 @@ adminRouter
           const jwtToken = adminTokenGenerator({ email });
           res.cookie("jwt", jwtToken); // cookie will not work in another domain
           res.status(200).json({
-            status: "Success",
+            status: "SUCCESS",
             jwtToken // usually token is not sent back, here sending for the workaround
           });
         } else {
@@ -32,14 +33,11 @@ adminRouter
       res.status(500).send("Internal Server Error");
     }
   })
-  .get("/isLoggedIn", async (req, res) => {
-    // const { jwt = "" } = req.cookies; // use this if using cookies
-    const jwt = req.header("Authorization");
-    if (adminTokenValidator(jwt)) {
-      res.status(200).json({ message: "logged in" });
-    } else {
-      res.status(401).send("unauthorized");
-    }
+  .get("/isLoggedIn", adminAuth, async (req, res) => {
+    res.status(200).json({ message: "logged in" });
+  })
+  .get("/logout", async (req, res) => {
+    // clear cookies
   });
 
 module.exports = adminRouter;
